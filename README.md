@@ -1,5 +1,9 @@
 # my-vue-app
 
+轻服务构建Node.js后端，即使不会后端也能通过简单的API构建后端服务。
+
+https://qingfuwu.cn/
+
 ## Project setup
 ```
 npm install
