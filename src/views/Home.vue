@@ -20,14 +20,16 @@
           <q-tab-panel name="signin" class='row justify-center'>
             <div class="text-h4 text-center col-12">登 录</div>
               <q-input rounded filled 
-                v-model="eamil" 
+                v-model="email" 
                 class='q-ma-md col-xs-11 col-8'
                 label="输入邮箱账号"
                 lazy-rules
-                :rules="[ val => val !== null && val !== '' || '邮箱不能为空']"
+                :rules="[ val => val !== null && val !== '' || '不能为空！',
+                  val => /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/.test(val) || '邮箱格式不正确！'
+                ]"
               >
                 <template v-slot:prepend>
-                  <q-icon name="star" />
+                  <q-icon name="email" />
                 </template>
               </q-input>
               <q-input rounded filled 
@@ -45,18 +47,20 @@
               <q-btn color="primary" icon-right="send" label="登 录" class='q-ma-md col-xs-11 col-8' @click='login' />        
           </q-tab-panel>
 
-          <q-tab-panel name="signup">
+
+          <q-tab-panel name="signup" class='row justify-center'>
             <div class="text-h4 text-center col-12">注册</div>
             <q-input rounded filled 
-              v-model="eamil" 
+              v-model="email" 
               class='q-ma-md col-xs-11 col-8'
               label="输入邮箱账号"
               lazy-rules
-              :rules="[ val => val !== null && val !== '' || '邮箱不能为空']"
+              :rules="[ val => val !== null && val !== '' || '不能为空！',
+                  val => /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/.test(val) || '邮箱格式不正确！'
+                ]"
             >
-            // TODO: 添加邮箱格式验证
               <template v-slot:prepend>
-                <q-icon name="star" />
+                <q-icon name="email" />
               </template>
             </q-input>
             <q-input rounded filled 
@@ -71,7 +75,19 @@
                 <q-icon name="password" />
               </template>
             </q-input>  
-            <q-btn color="primary" icon-right="send" label="注 册" class='q-ma-md col-xs-11 col-8' />        
+            <q-input rounded filled 
+              v-model="password_confirm" 
+              class='q-ma-md col-xs-11 col-8'
+              label="再次输入密码"
+              type="password"
+              lazy-rules
+              :rules="[ val => val !== null && val !== '' || '密码不能为空']"
+            >
+              <template v-slot:prepend>
+                <q-icon name="password" />
+              </template>
+            </q-input> 
+            <q-btn color="primary" icon-right="send" label="注 册" class='q-ma-md col-xs-11 col-8' @click='register' />        
           </q-tab-panel>
 
           
@@ -93,49 +109,43 @@ export default {
   data: function() {
     return {
       tab: 'signin',
-      eamil: '',
-      password: ''
+      email: '',
+      password: '',
+      password_confirm:''
     }
   },
   methods:{
     login(){
-      alert('work')
+      let load = {
+        id:this.email,
+        password:this.password
+      };
+
+      let res = this.$axios.post('https://qc8y9k.fn.thelarkcloud.com/login',load)
+    },
+    register(){
+
     }
-      
-  },
-  create:function(){
   }
 }
 
-
-
-
-//  async go(){
-//       await this.$axios.post('https://qcdhrv.fn.thelarkcloud.com/hello',{user:'xxq',password:'259'})
-//       .then(
-//         res => {
-//           this.result = res.data
-//           console.log(res.data);
-//         }
-//       )
-
-//       await new Promise((resolve) => {
-//         console.log(1);
-//         resolve()
-        
-//       }).then(
-//         () => {
-//           console.log(2);
-//         }
-//       ).catch(
-//         () => {
-//           console.log('failed');
-//         }
-//       )
-
-//       console.log('done');
+// async post(url,params){
+//       let res = this.$axios.post(url,params)
+//       return res
+//     },
+//     async login(){
+//       let load = {
+//         id:this.email,
+//         password:this.password
+//       }
+//       let res = await this.post('https://qc8y9k.fn.thelarkcloud.com/login',load)
+      
+//       console.log(res.data);
+      
+//     },
+//     register(){
+//       console.log('?');
 //     }
-
 </script>
 
 
