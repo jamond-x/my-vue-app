@@ -102,6 +102,7 @@
 
 <script>
 
+
 export default {
   name: 'Home',
   components: {
@@ -115,19 +116,48 @@ export default {
     }
   },
   methods:{
-    login(){
-      let load = {
+    // async post(url,load) {
+    //   let res = await this.$axios.post(url,load)
+    //   return res
+    // },
+    // async login() {
+    //   let loads = {
+    //     id:this.email,
+    //     password:this.password
+    //   };
+
+    //   let res = await this.post('https://qc8y9k.fn.thelarkcloud.com/login',{id: '123@163.com',password: '123'})
+
+    //   console.log(res);
+    // },
+    // register(){
+
+    // }
+    post(url,load) {
+     
+      return 123
+    },
+    login: async function() {
+      let loads = {
         id:this.email,
         password:this.password
       };
 
-      let res = this.$axios.post('https://qc8y9k.fn.thelarkcloud.com/login',load)
-    },
-    register(){
+      let res = await this.$axios.post('https://qc8y9k.fn.thelarkcloud.com/login',loads);
 
+      console.log(res);
+
+      alert(res.data.msg);
+
+
+    },
+    register: async function() {
+      alert("00000");
     }
   }
 }
+
+// TODO: 解决 async 用不了axios问题！！！
 
 // async post(url,params){
 //       let res = this.$axios.post(url,params)
